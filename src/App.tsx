@@ -4,7 +4,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
 import { TransactionCard } from "./view/transaction-card/transaction-card.component";
-import { Total } from "./view/transaction-card/total/total.component";
+import { Total } from "./view/total/total.component";
 
 const INITIAL_DEBT = 96500;
 
