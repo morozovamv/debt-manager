@@ -3,6 +3,7 @@ import { PrismicLink } from "apollo-link-prismic";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
+import { TransactionCard } from "./view/transaction-card/transaction-card.component";
 
 const INITIAL_DEBT = 96500;
 
@@ -64,12 +65,12 @@ function App() {
   ) : (
     <div>
       {transactions.map((transaction, index) => (
-        <div key={`${transaction.amount}_${transaction.date}`}>
-          <div>
-            Transaction #{index + 1} from {transaction.date}
-          </div>
-          <div>Amount: {`${transaction.amount} rubles`}</div>
-        </div>
+        <TransactionCard
+          key={`${transaction.amount}_${transaction.date}`}
+          count={index}
+          amount={transaction.amount}
+          date={transaction.date}
+        />
       ))}
       {total !== undefined && (
         <div>It remains to pay off: {INITIAL_DEBT - total} rubles</div>
