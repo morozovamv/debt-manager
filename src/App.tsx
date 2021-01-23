@@ -4,6 +4,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
 import { TransactionCard } from "./view/transaction-card/transaction-card.component";
+import { Total } from "./view/transaction-card/total/total.component";
 
 const INITIAL_DEBT = 96500;
 
@@ -58,8 +59,6 @@ function App() {
       });
   }, []);
 
-  const total = transactions?.map((a) => a.amount).reduce((a, b) => a + b);
-
   return !transactions ? (
     <div>Loading...</div>
   ) : (
@@ -75,12 +74,12 @@ function App() {
           }).format(new Date(transaction.date))}
         />
       ))}
-      {total !== undefined && (
-        <div>It remains to pay off: {INITIAL_DEBT - total} rubles</div>
-      )}
-      {total === undefined && <div>it remains to pay off: ? rubles</div>}
+      <Total initialDebt={INITIAL_DEBT} total={getTotal(transactions)} />
     </div>
   );
 }
+
+const getTotal = (transactions: Transaction[]): number =>
+  transactions.map((a) => a.amount).reduce((a, b) => a + b);
 
 export default App;
