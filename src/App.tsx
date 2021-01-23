@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
 import { PrismicLink } from "apollo-link-prismic";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
@@ -52,7 +50,6 @@ function App() {
         console.log(response);
         const transactions: { amount: number; date: string }[] =
           response.data.allTransactions.edges[0].node.body[0].fields;
-        console.log("--- transactions", transactions);
         setTransactions(transactions);
       })
       .catch((error) => {
@@ -60,20 +57,24 @@ function App() {
       });
   }, []);
 
-  const a = transactions?.map((a) => a.amount).reduce((a, b) => a + b);
+  const total = transactions?.map((a) => a.amount).reduce((a, b) => a + b);
 
-  return (
-    <div className="App">
-      {transactions?.map((transaction) => (
+  return !transactions ? (
+    <div>Loading...</div>
+  ) : (
+    <div>
+      {transactions.map((transaction, index) => (
         <div key={`${transaction.amount}_${transaction.date}`}>
-          <div>{`${transaction.amount} rubles`}</div>
-          <div>{transaction.date}</div>
+          <div>
+            Transaction #{index + 1} from {transaction.date}
+          </div>
+          <div>Amount: {`${transaction.amount} rubles`}</div>
         </div>
       ))}
-      {a !== undefined && (
-        <div>it remains to pay off: {INITIAL_DEBT - a} rubles</div>
+      {total !== undefined && (
+        <div>It remains to pay off: {INITIAL_DEBT - total} rubles</div>
       )}
-      {a === undefined && <div>it remains to pay off: ? rubles</div>}
+      {total === undefined && <div>it remains to pay off: ? rubles</div>}
     </div>
   );
 }
