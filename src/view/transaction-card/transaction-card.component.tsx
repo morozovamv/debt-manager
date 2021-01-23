@@ -12,7 +12,7 @@ export const TransactionCard = memo<TransactionCardProps>((props) => {
     <div className={css.container}>
       <div>Transaction #{props.count}</div>
       <div>
-        Amount: <span className={css.amount}>{props.amount}</span>&nbsp;rubles
+        Amount: <span className={css.amount}>{props.amount} &#8381;</span>
       </div>
       <div>From: {props.date}</div>
     </div>

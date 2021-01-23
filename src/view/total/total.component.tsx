@@ -9,7 +9,8 @@ interface TotalProps {
 export const Total = (props: TotalProps) => (
   <div className={css.container}>
     It remains to pay off:{" "}
-    <span className={css.totalValue}>{props.initialDebt - props.total}</span>
-    &nbsp;rubles
+    <span className={css.totalValue}>
+      {props.initialDebt - props.total} &#8381;
+    </span>
   </div>
 );
