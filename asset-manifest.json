@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/debt-manager/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/debt-manager/static/js/main.67655be3.chunk.js",
+    "main.js.map": "/debt-manager/static/js/main.67655be3.chunk.js.map",
+    "runtime-main.js": "/debt-manager/static/js/runtime-main.e4eb6564.js",
+    "runtime-main.js.map": "/debt-manager/static/js/runtime-main.e4eb6564.js.map",
+    "static/js/2.c9428e07.chunk.js": "/debt-manager/static/js/2.c9428e07.chunk.js",
+    "static/js/2.c9428e07.chunk.js.map": "/debt-manager/static/js/2.c9428e07.chunk.js.map",
+    "static/js/3.71ecbfae.chunk.js": "/debt-manager/static/js/3.71ecbfae.chunk.js",
+    "static/js/3.71ecbfae.chunk.js.map": "/debt-manager/static/js/3.71ecbfae.chunk.js.map",
+    "index.html": "/debt-manager/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/debt-manager/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.c9428e07.chunk.js.LICENSE.txt": "/debt-manager/static/js/2.c9428e07.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e4eb6564.js",
+    "static/js/2.c9428e07.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.67655be3.chunk.js"
+  ]
+}
