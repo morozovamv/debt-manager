@@ -1,0 +1,9 @@
+.container {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.amount {
+  font-size: 22px;
+  font-weight: 500;
+}
