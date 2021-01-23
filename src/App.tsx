@@ -69,7 +69,10 @@ function App() {
           key={`${transaction.amount}_${transaction.date}`}
           count={index}
           amount={transaction.amount}
-          date={transaction.date}
+          date={new Intl.DateTimeFormat("en-US", {
+            dateStyle: "full",
+            timeStyle: "long",
+          }).format(new Date(transaction.date))}
         />
       ))}
       {total !== undefined && (
