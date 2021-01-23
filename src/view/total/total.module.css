@@ -1,0 +1,10 @@
+.container {
+  margin-top: 10px;
+  margin-right: 20px;
+  text-align: end;
+}
+
+.totalValue {
+  font-size: 22px;
+  font-weight: 500;
+}
