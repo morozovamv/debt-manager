@@ -1,77 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { PrismicLink } from "apollo-link-prismic";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import ApolloClient from "apollo-client";
-import gql from "graphql-tag";
+import { useEffect, useState } from "react";
 import { TransactionCard } from "./view/transaction-card/transaction-card.component";
 import { Total } from "./view/total/total.component";
+import { useGetAllTransactionsQuery } from "./generated/graphql";
 
+// TODO: move to prismic
 const INITIAL_DEBT = 96500;
 
 interface Transaction {
-  amount: number;
-  date: string;
+  amount?: number | null;
+  date?: string;
 }
-
-const client = new ApolloClient({
-  link: PrismicLink({
-    uri: "https://debt-manager.prismic.io/graphql",
-  }),
-  cache: new InMemoryCache(),
-});
 
 function App() {
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
 
+  const { data } = useGetAllTransactionsQuery();
+
   useEffect(() => {
-    client
-      .query({
-        query: gql`
-          {
-            allTransactions {
-              edges {
-                node {
-                  body {
-                    __typename
-                    ... on TransactionBodyTransactions {
-                      type
-                      label
-                      fields {
-                        amount
-                        date
-                      }
-                    }
-                  }
-                }
-              }
-            }
+    if (data) {
+      const edges = data.allTransactions.edges;
+      if (edges !== null && edges !== undefined && edges.length > 0) {
+        const body = edges[0]?.node?.body;
+        if (body !== null && body !== undefined && body.length > 0) {
+          const fields = body[0].fields;
+          if (fields !== null && fields !== undefined && fields.length > 0) {
+            setTransactions(fields);
           }
-        `,
-      })
-      .then((response) => {
-        console.log(response);
-        const transactions: { amount: number; date: string }[] =
-          response.data.allTransactions.edges[0].node.body[0].fields;
-        setTransactions(transactions);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+        }
+      }
+    }
+  }, [data]);
 
   return !transactions ? (
-    <div>Loading...</div>
+    <div>Loading....</div>
   ) : (
     <div>
       {transactions.map((transaction, index) => (
         <TransactionCard
           key={`${transaction.amount}_${transaction.date}`}
           count={index}
-          amount={transaction.amount}
-          date={new Intl.DateTimeFormat("en-US", {
-            dateStyle: "full",
-            timeStyle: "long",
-          }).format(new Date(transaction.date))}
+          amount={transaction.amount ?? getDefaultAmount()}
+          date={formatDate(transaction.date)}
         />
       ))}
       <Total initialDebt={INITIAL_DEBT} total={getTotal(transactions)} />
@@ -80,6 +49,20 @@ function App() {
 }
 
 const getTotal = (transactions: Transaction[]): number =>
-  transactions.map((a) => a.amount).reduce((a, b) => a + b);
+  transactions
+    .map((a) => a.amount ?? getDefaultAmount())
+    .reduce((a, b) => a + b);
+
+const getDefaultAmount = (): number => 0;
+
+const formatDate = (date: string | null | undefined): string | null => {
+  if (date !== null && date !== undefined) {
+    return new Intl.DateTimeFormat("en-US", {
+      dateStyle: "full",
+      timeStyle: "long",
+    }).format(new Date(date));
+  }
+  return null;
+};
 
 export default App;

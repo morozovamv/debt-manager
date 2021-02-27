@@ -1,4 +1,3 @@
-import React from "react";
 import css from "./total.module.css";
 
 interface TotalProps {
