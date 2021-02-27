@@ -24,3 +24,5 @@ yarn-error.log*
 
 settings.json
 .eslintcache
+
+src/generated

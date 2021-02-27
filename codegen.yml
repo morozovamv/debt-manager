@@ -1,0 +1,24 @@
+overwrite: true
+schema:
+  - https://debt-manager.prismic.io/graphql:
+      method: GET
+      headers:
+        Authorization: "MC5ZQkdzVWhVQUFDWUFZSGN4.du-_ve-_ve-_vWfvv73vv73vv71S77-9ZO-_ve-_ve-_ve-_ve-_ve-_vTRU77-9MDTvv73vv71SE1fvv73vv71w77-9VA"
+        prismic-ref: "YDOtyRMAAGTsVkFW"
+documents: "src/**/*.graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      - "fragment-matcher"
+  src/generated/graphql.d.ts:
+    plugins:
+      - "typescript-graphql-files-modules"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
+hooks:
+  afterAllFileWrite:
+    - prettier --write

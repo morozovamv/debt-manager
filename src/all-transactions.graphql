@@ -1,0 +1,19 @@
+query getAllTransactions {
+  allTransactions {
+    edges {
+      node {
+        body {
+          __typename
+          ... on TransactionBodyTransactions {
+            type
+            label
+            fields {
+              date
+              amount
+            }
+          }
+        }
+      }
+    }
+  }
+}
